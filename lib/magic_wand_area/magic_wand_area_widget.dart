@@ -13,6 +13,7 @@ class MagicWandArea extends StatefulWidget {
 
 class _MagicWandAreaState extends State<MagicWandArea> {
   final mouseEvent = ValueNotifier<PointerHoverEvent?>(null);
+  final wandPositionNotifier = ValueNotifier<Offset>(Offset.zero);
 
   @override
   Widget build(BuildContext context) {
@@ -24,13 +25,15 @@ class _MagicWandAreaState extends State<MagicWandArea> {
           },
           child: Stack(
             children: [
-              WandMouseAnimation(
-                mouseEvent: mouseEvent,
-                constraints: constraints,
-              ),
               MagicCards(
                 mouseEvent: mouseEvent,
                 constraints: constraints,
+                wandPositionNotifier: wandPositionNotifier,
+              ),
+              WandMouseAnimation(
+                mouseEvent: mouseEvent,
+                constraints: constraints,
+                wandPositionNotifier: wandPositionNotifier,
               ),
             ],
           ),

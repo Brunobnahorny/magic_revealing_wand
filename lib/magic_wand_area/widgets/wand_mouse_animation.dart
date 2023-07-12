@@ -5,11 +5,13 @@ import 'wand_painter_widget.dart';
 
 class WandMouseAnimation extends StatefulWidget {
   final ValueNotifier<PointerHoverEvent?> mouseEvent;
+  final ValueNotifier<Offset> wandPositionNotifier;
   final BoxConstraints constraints;
 
   const WandMouseAnimation({
     super.key,
     required this.mouseEvent,
+    required this.wandPositionNotifier,
     required this.constraints,
   });
 
@@ -54,6 +56,7 @@ class _WandMouseAnimationState extends State<WandMouseAnimation> {
           return CustomPaint(
             painter: WandPainter(
               wandPosition: tweenValue,
+              wandPositionNotifier: widget.wandPositionNotifier,
             ),
             size: widget.constraints.biggest,
           );

@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 
 class WandPainter extends CustomPainter {
+  final ValueNotifier<Offset> wandPositionNotifier;
   final Offset wandPosition;
 
   WandPainter({
     required this.wandPosition,
+    required this.wandPositionNotifier,
   });
 
   void drawRotated({
@@ -33,7 +35,7 @@ class WandPainter extends CustomPainter {
         (-rotationRange / 2) + wandXByScreen.clamp(0, 1) * rotationRange;
     final stops = <double>[0, linearGradientMiddle, 1];
     final positionWandy =
-        (size.height * 0.16) + wandPosition.dy * 0.56 + (size.height / 2);
+        (size.height * 0.16) + wandPosition.dy * 0.52 + (size.height / 2);
     final positionWandCenter = Offset(positionWandX, positionWandy);
     const double wandWidth = 36;
     final wandRotation = rotationInWand;
@@ -87,6 +89,11 @@ class WandPainter extends CustomPainter {
           Color(0xFFD2D7E5),
         ],
       ).createShader(wandHeadRect);
+
+    //sets wand notifier
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      wandPositionNotifier.value = positionWandCenter;
+    });
 
     drawRotated(
       canvas: canvas,
